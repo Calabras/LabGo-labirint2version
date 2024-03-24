@@ -2,59 +2,35 @@
 #include "Cell.h"
 #include "Hero.h"
 #include <fstream>
-//void Game::setHeroPose(int i, int j) {
-//	 //Получаем размеры лабиринта
-//	lab_h= labirint.getrows();
-//	lab_w= labirint.getcols();
-//
-//	if (i < 0 || i >= lab_h || j < 0 || j >= lab_w) {
-//		return;
-//	}
-//	if (labirint[i][j]->cansethero()) {
-//		//убираем персонажа с текущей клетки
-//		*labirint[hero.geti()][hero.getj()] - hero;
-//		//передвигаем персонажа в новую клетку
-//		*labirint[i][j] + hero;
-//		hero.move(i, j);
-//	}
-//}
+#include "Wall.h"
+#include "Moneta.h"
 void Game::setHeroPose(int i, int j) {
-	// Получаем размеры лабиринта
 	lab_h = labirint.getrows();
 	lab_w = labirint.getcols();
+	lab_health = labirint.gethealth();
 
-	// Проверяем, что новая позиция находится в пределах лабиринта
 	if (i < 0 || i >= lab_h || j < 0 || j >= lab_w) {
 		return;
 	}
-
-	// Проверяем, можно ли переместить героя в новую клетку
 	if (labirint[i][j]->cansethero()) {
-		// Убираем героя из текущей клетки
-		Cell* oldCell = *labirint[hero.geti()][hero.getj()]-(hero);
-		// Проверяем, нужно ли обновить старую клетку (например, если герой взял монету)
-		if (oldCell != labirint[hero.geti()][hero.getj()]) {
-			delete labirint[hero.geti()][hero.getj()]; // Удаляем старую клетку
-			labirint[hero.geti()][hero.getj()] = oldCell; // Ставим новую/обновленную клетку
+		Cell* oldCell = *labirint[hero.geti()][hero.getj()] - hero; //убрал героя из клетки
+		if (oldCell != labirint[hero.geti()][hero.getj()]) { //обновление старой клетки
+			delete labirint[hero.geti()][hero.getj()];
+			labirint[hero.geti()][hero.getj()] = oldCell;
 		}
-
-		// Передвигаем героя в новую клетку
-		Cell* newCell = *labirint[i][j]+(hero);
-		// Проверяем, изменилась ли клетка после добавления героя
-		if (newCell != labirint[i][j]) {
-			delete labirint[i][j]; // Удаляем старую клетку
-			labirint[i][j] = newCell; // Обновляем клетку на новую
+		Cell* newCell = *labirint[i][j] + hero; //идем в новую клетку
+		if (newCell != labirint[i][j]) { //обновление новой клетки
+			delete labirint[i][j];
+			labirint[i][j] = newCell;
 		}
-
-		// Обновляем позицию героя
 		hero.move(i, j);
 	}
+	else return;
 }
-
 
 //конструктор для игры по умолчанию
 Game::Game() : labirint() {
-	setHeroPose(2, 2);
+	setHeroPose(1, 1);
 } 
 
 //передвижение героя
@@ -112,6 +88,7 @@ ostream& operator<<(ostream& out, const Game& g) {
 				out << "/";
 			}
 			else {
+				*(g.labirint[0][0]) = '#';
 				out << *(g.labirint[i][j]);
 			}
 		}
@@ -124,10 +101,10 @@ ostream& operator<<(ostream& out, const Game& g) {
 void Game::readfromfile2(const string& filename) {
 	ifstream file(filename);
 	if (file) {
-		int newrows, newcols;
-		file >> newrows >> newcols;
+		int newrows, newcols, counthealth;
+		file >> newrows >> newcols >> counthealth;
 		file.ignore(); //чтобы скипнуть \n
-		DynamicLab tempLab(newrows, newcols);
+		DynamicLab tempLab(newrows, newcols, counthealth);
 		this->labirint = tempLab; //использование и перегрузка присваивания
 		file >> this->labirint;
 	}
@@ -140,7 +117,7 @@ void Game::readfromfile2(const string& filename) {
 void Game::writeinfile(const string& filename) {
 	ofstream file(filename);
 	if (file) {
-		file << labirint.getrows() <<" "<< labirint.getcols();
+		file << labirint.getrows() << " " << labirint.getcols() << " " << labirint.gethealth();
 		file << endl;
 		int ih = hero.geti();
 		int ij = hero.getj();
@@ -151,4 +128,12 @@ void Game::writeinfile(const string& filename) {
 		cerr << "Error with opening of file: " << filename << endl;
 	}
 
+}
+//выводить число монеток
+void Game::displayCoins() const {
+	cout << "Total Coins of hero: " << hero.getcoins() << endl;
+}
+//выводить число хп
+void Game::displayHealth() const {
+	cout << "Your Heath:  " << hero.gethealth() <<  " hp" << endl;
 }

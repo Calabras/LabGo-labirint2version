@@ -6,10 +6,10 @@ using namespace std;
 class DynamicLab {
 private:
     Cell*** m;
-    int rows, cols;
+    int rows, cols, healths;
 public:
     //конструктор для динамического массива 
-    DynamicLab(int rows = 0, int cols = 0);
+    DynamicLab(int rows = 0, int cols = 0, int healths=0);
     //деструктор для него
     ~DynamicLab();
 
@@ -24,6 +24,7 @@ public:
     //получить текущее число строк и столбцов
     int getrows() const { return rows; }
     int getcols() const { return cols; }
+    int gethealth() const { return healths; }
 
     //считывание лабииринта из файла
     friend istream& operator>>(istream& in, DynamicLab& labirint);

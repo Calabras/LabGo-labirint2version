@@ -133,6 +133,7 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Moneta.cpp" />
+    <ClCompile Include="Monsters.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Moneta.h" />
+    <ClInclude Include="Monsters.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>

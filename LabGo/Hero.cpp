@@ -15,3 +15,9 @@ void Hero::addcoins() { coins++; }
 int Hero::getcoins() const {
 	return coins;
 }
+//убрать жизнь
+void Hero::removehealth() { health--; }
+//вернуть число хп
+int Hero::gethealth() const {
+	return health;
+}

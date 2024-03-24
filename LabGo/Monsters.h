@@ -1,18 +1,18 @@
 #include "Cell.h"
 #include "Hero.h"
-class Moneta : public Cell {
+class Monsters : public Cell {
 private:
-    int coinscount=0; // cчетчик монет
+    int healthcount=3; // cчетчик хп
 public:
-    Moneta();
-    Moneta(char _val);
-    ~Moneta();
+    Monsters();
+    Monsters(char _val);
+    ~Monsters();
     //операция +
     Cell* operator+(Hero& hero);
     //операция -
     Cell* operator-(Hero& hero);
     //печтать клетки
     void print(ostream& out) const;
-    //получить число монет
-    int getcoinscount();
+    //получить число хп
+    int gethealths();
 };

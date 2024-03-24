@@ -1,23 +1,23 @@
 #include <iostream>
 #include "DynamicLab.h"
+#include "Hero.h"
 using namespace std;
 
-DynamicLab::DynamicLab(int _rows, int _cols) : rows(_rows), cols(_cols), m(nullptr) {
+DynamicLab::DynamicLab(int _rows, int _cols, int _counthealth) : rows(_rows), cols(_cols), healths(_counthealth), m(nullptr) {
     m = new Cell * *[rows];
     for (int i = 0; i < rows; i++) {
         m[i] = new Cell * [cols];
         for (int j = 0; j < cols; j++) {
-            m[i][j] = new Cell(); // Выделяем память для каждой клетки
+            m[i][j] = new Cell();
         }
     }
 }
-
 
 //деструктор
 DynamicLab::~DynamicLab() {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            delete m[i][j]; // Освобождаем память каждой клетки
+            delete m[i][j]; 
         }
         delete[] m[i];
     }
@@ -25,20 +25,20 @@ DynamicLab::~DynamicLab() {
 }
 
 //конструктор копирования
-DynamicLab::DynamicLab(const DynamicLab& second_lab) : rows(second_lab.rows), cols(second_lab.cols), m(nullptr) {
+DynamicLab::DynamicLab(const DynamicLab& second_lab) : rows(second_lab.rows), cols(second_lab.cols), healths(second_lab.healths), m(nullptr) {
     m = new Cell * *[rows];
     for (int i = 0; i < rows; i++) {
         m[i] = new Cell * [cols];
         for (int j = 0; j < cols; j++) {
-            m[i][j] = new Cell(*second_lab.m[i][j]); // Выделяем память и копируем каждую клетку
+            m[i][j] = new Cell(*second_lab.m[i][j]);
         }
     }
 }
 
 //перегрузка операции присваивания =
 DynamicLab& DynamicLab::operator=(const DynamicLab& second_lab) {
-    if (this != &second_lab) { // Проверка на самоприсваивание
-        // Освобождение текущей памяти
+    if (this != &second_lab) { 
+        
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 delete m[i][j];
@@ -50,17 +50,18 @@ DynamicLab& DynamicLab::operator=(const DynamicLab& second_lab) {
         // Копирование размеров лабиринта
         rows = second_lab.rows;
         cols = second_lab.cols;
-
-        // Выделение памяти и копирование клеток
+        //Копирование числа хп
+        healths = second_lab.healths;
+        
         m = new Cell * *[rows];
         for (int i = 0; i < rows; i++) {
             m[i] = new Cell * [cols];
             for (int j = 0; j < cols; j++) {
-                m[i][j] = new Cell(*second_lab.m[i][j]); // Глубокое копирование каждой клетки
+                m[i][j] = new Cell(*second_lab.m[i][j]); 
             }
         }
     }
-    return *this; // Возврат ссылки на текущий объект
+    return *this; 
 }
 
 
@@ -70,24 +71,9 @@ Cell** DynamicLab::operator[](int row) const {
         return m[row];
     }
     else {
-        return nullptr; // Возвращаем nullptr для недопустимых индексов
+        return nullptr;
     }
 }
-
-
-
-//операция ввода лабиринта из файла
-//istream& operator>>(istream& in, DynamicLab& labirint)
-//{
-//    for (int i = 0; i < labirint.rows; i++) {
-//        for (int j = 0; j < labirint.cols; j++) {
-//            in >> noskipws >> *labirint[i][j];
-//        }
-//        in.ignore(); //если хотим считывать лабиринт из нескольких строк, если хотим с одной строки, то просто закоментировать
-//    }
-//    return in;
-//}
-
 
 istream& operator>>(istream& in, DynamicLab& labirint) {
     for (int i = 0; i < labirint.getrows(); i++) {
@@ -100,10 +86,11 @@ istream& operator>>(istream& in, DynamicLab& labirint) {
             delete labirint[i][j];
             // Присваиваем новую клетку позиции в лабиринте
             labirint[i][j] = tempCell;
-            if (j == labirint.getcols() - 1) {
+            /*if (j == labirint.getcols() - 1) {
                 in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
+            }*/
         }
+        in.ignore();
     }
     return in;
 }

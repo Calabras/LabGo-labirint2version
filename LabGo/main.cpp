@@ -10,12 +10,15 @@ int main() {
     g.readfromfile2("labirint2.txt"); //считывание лабиринта из многострочного файла
 
     //начальная позиция
-    g.setHeroPose(2, 2);
+    g.setHeroPose(1, 1);
     unsigned int val = 0;
     cout << g;
+    cout << "Total Coins:  " << g.getHero().getcoins() << endl;
+    cout << "Total Health: " << g.getHero().gethealth() << " hp" << endl;
+
 
     val = _getch();
-    while (val != 27) { //esc
+    while (val != 27 && g.getHero().gethealth()>0) { //esc
         system("cls"); 
 
         if (val == 224) {
@@ -37,9 +40,12 @@ int main() {
         }
 
         cout << g;
+        cout << "Total Coins:  " << g.getHero().getcoins() << endl;
+        cout << "Total Health: " << g.getHero().gethealth() << " hp" << endl;
         val = _getch();
     }
-    if (val == 27) {
+    if (val == 27 || g.getHero().gethealth() <=0) {
+        cout << "Game over!" << endl;
         g.writeinfile("labirintend.txt"); //сохранили лабиринт в конце программы
     }
     return 0;

@@ -15,6 +15,7 @@ class Game {
 	DynamicLab labirint; //создание динамического массива для лабиринта
 	Hero hero; //создание персонажа
 	int lab_w, lab_h; //размеры лабиринта
+	int lab_health; //здоровье героя
 public:
 	Game(); //конструктор по умолчанию для создания игры
 	//void readfromfile(const string& filename); //считывание игры из файла
@@ -26,4 +27,8 @@ public:
 	friend ostream& operator<<(ostream& out, const Game& g); //печать игры в консоль
 	friend istream& operator>>(istream& in, Game& g); //считывание игры из файла
 
+	Game(const Hero& hero) : hero(hero) {} // конструктор с инициализацией героя
+	void displayCoins() const; //вывод числа монеток
+	const Hero& getHero() const { return hero; } //возвращать адрес героя
+	void displayHealth() const; //вывод числа хп героя
 };

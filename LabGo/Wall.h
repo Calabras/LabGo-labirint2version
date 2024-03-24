@@ -1,17 +1,11 @@
 #include "Cell.h"
+#include "Hero.h"
 class Wall : public Cell {
 public:
-    Cell* operator+(Hero& hero) {
-        // —тена не позвол€ет герою проходить, возвращает себ€
-        return this;
-    }
-
-    Cell* operator-(Hero& hero) {
-        // ”даление геро€ из стены не предусмотрено, возвращает себ€
-        return this;
-    }
-
-    void print(ostream& out) const override {
-        out << "#"; // ѕредположим, что # - это стена
-    }
+    Cell* operator+(Hero& hero);
+    Cell* operator-(Hero& hero);
+    Wall();
+    Wall(char _val);
+    //печать клетки
+    virtual void print(ostream& out) const;
 };

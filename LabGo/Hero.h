@@ -1,10 +1,9 @@
 #pragma once
 #include <iostream>
 using namespace std;
-
 class Hero
 {
-	int i, j, coins;
+	int i, j, coins=0, health = 3;
 public:
 	//позиция персонажа (изменение позиции персонажа)
 	Hero(int _i=0, int _j=0) {
@@ -26,4 +25,8 @@ public:
 	}
 	//печать персонажа
 	friend ostream& operator<<(ostream& out, const Hero& h);
+	//убрать жизнь
+	void removehealth();
+	//вернуть число хп
+	int gethealth() const;
 };
