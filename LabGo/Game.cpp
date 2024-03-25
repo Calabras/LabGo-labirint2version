@@ -103,6 +103,7 @@ void Game::readfromfile2(const string& filename) {
 	if (file) {
 		int newrows, newcols, counthealth;
 		file >> newrows >> newcols >> counthealth;
+		hero.health = counthealth;
 		file.ignore(); //чтобы скипнуть \n
 		DynamicLab tempLab(newrows, newcols, counthealth);
 		this->labirint = tempLab; //использование и перегрузка присваивания
