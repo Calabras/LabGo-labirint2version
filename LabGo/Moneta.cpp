@@ -13,19 +13,19 @@ Moneta::~Moneta() { coinscount--; }
 
 //операция +
 Cell* Moneta::operator+(Hero& hero) {
-    hero.addcoins(); // Увеличиваем количество монет у героя
+    hero.addcoins(); 
     cout << "Total Coins: " << hero.getcoins() << endl;
 
-    Cell* newCell = new Cell(); // Создаем новую пустую клетку
-    newCell->setHero(&hero); // Устанавливаем героя в новую клетку
-    return newCell; // Возвращаем новую клетку с героем
+    Cell* newCell = new Cell(); 
+    newCell->setHero(&hero); 
+    return newCell; 
 }
 
 
 //операция -
 Cell* Moneta::operator-(Hero& hero) {
     if (this->hero == &hero) this->hero = nullptr;
-    return this;
+    return new Cell;
 }
 //вывод монеты на печать
 void Moneta::print(ostream& out) const {
@@ -34,4 +34,9 @@ void Moneta::print(ostream& out) const {
  int Moneta::getcoinscount() { 
     cout << "Total Coins: " << coinscount << endl;
     return coinscount; 
+ }
+
+ //копирование объекта
+ Moneta* Moneta::copy() {
+     return new Moneta(*this);
  }

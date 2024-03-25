@@ -30,7 +30,8 @@ DynamicLab::DynamicLab(const DynamicLab& second_lab) : rows(second_lab.rows), co
     for (int i = 0; i < rows; i++) {
         m[i] = new Cell * [cols];
         for (int j = 0; j < cols; j++) {
-            m[i][j] = new Cell(*second_lab.m[i][j]);
+            //m[i][j] = new Cell(*second_lab.m[i][j]);
+           m[i][j]=second_lab.m[i][j]->copy();
         }
     }
 }
@@ -57,7 +58,8 @@ DynamicLab& DynamicLab::operator=(const DynamicLab& second_lab) {
         for (int i = 0; i < rows; i++) {
             m[i] = new Cell * [cols];
             for (int j = 0; j < cols; j++) {
-                m[i][j] = new Cell(*second_lab.m[i][j]); 
+                //m[i][j] = new Cell(*second_lab.m[i][j]); 
+                m[i][j] = second_lab.m[i][j]->copy();
             }
         }
     }

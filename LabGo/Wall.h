@@ -8,4 +8,6 @@ public:
     Wall(char _val);
     //печать клетки
     virtual void print(ostream& out) const;
+    //копирование стены
+    Wall* copy();
 };

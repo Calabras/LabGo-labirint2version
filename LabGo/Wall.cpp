@@ -13,14 +13,18 @@ Wall::Wall(char _val) {
 //операция +
 Cell* Wall::operator+(Hero& hero) {
     this->hero = &hero;
-    return this;
+    return new Cell;
 }
 //операция -
 Cell* Wall::operator-(Hero& hero) {
     this->hero = &hero;
-    return this;
+    return new Cell;
 }
 //вывод стенки на печать
 void Wall::print(ostream& out) const {
     out << "#";
+}
+//копирование объекта
+Wall* Wall::copy() {
+    return new Wall(*this);
 }

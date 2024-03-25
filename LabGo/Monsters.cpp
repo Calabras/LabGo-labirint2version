@@ -24,7 +24,7 @@ Cell* Monsters::operator+(Hero& hero) {
 //операция -
 Cell* Monsters::operator-(Hero& hero) {
     if (this->hero == &hero) this->hero = nullptr;
-    return this;
+    return new Cell;
 }
 //вывод монеты на печать
 void Monsters::print(ostream& out) const {
@@ -33,4 +33,8 @@ void Monsters::print(ostream& out) const {
 int Monsters::gethealths() {
     cout << "Total Health: " << healthcount << " hp" << endl;
     return healthcount;
+}
+//копирование объекта
+Monsters* Monsters::copy() {
+    return new Monsters(*this);
 }

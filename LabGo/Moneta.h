@@ -15,4 +15,6 @@ public:
     void print(ostream& out) const;
     //получить число монет
     int getcoinscount();
+    //копирование объекта
+    Moneta* copy();
 };

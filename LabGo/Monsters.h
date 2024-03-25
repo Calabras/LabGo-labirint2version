@@ -15,4 +15,6 @@ public:
     void print(ostream& out) const;
     //получить число хп
     int gethealths();
+    //копирование стены
+    Monsters* copy();
 };

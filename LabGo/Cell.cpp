@@ -74,3 +74,7 @@ istream& operator>>(istream& in, Cell*& cell) {
     return in;
 }
 
+//копирование объекта
+Cell* Cell::copy() {
+    return new Cell(*this);
+}
